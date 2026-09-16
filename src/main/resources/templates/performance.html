@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Performance Analytics</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+        }
+
+        header {
+            background: #1f2937;
+            color: white;
+            padding: 30px 60px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        header p {
+            color: #d1d5db;
+        }
+
+        .container {
+            padding: 40px 60px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .student {
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .student h2 {
+            margin-top: 0;
+        }
+
+        .record {
+            background: #f9fafb;
+            padding: 18px;
+            border-radius: 8px;
+            margin-top: 12px;
+            border-left: 4px solid #2563eb;
+        }
+
+        .analytics {
+            margin-top: 20px;
+            padding: 18px;
+            background: #eef2ff;
+            border-radius: 8px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 20px;
+            background: #374151;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Performance Analytics</h1>
+    <p>Analyze student academic performance</p>
+</header>
+
+<div class="container">
+
+    <div th:if="${students.isEmpty()}" class="card">
+        <h2>No Students Found</h2>
+        <p>Please add a student first.</p>
+    </div>
+
+    <div th:each="student : ${students}" class="card">
+
+        <div class="student">
+
+            <h2 th:text="${student.name}">
+                Student Name
+            </h2>
+
+            <p>
+                Registration No.:
+                <strong th:text="${student.registrationNumber}">
+                    REG001
+                </strong>
+            </p>
+
+            <div th:if="${records[student.registrationNumber] == null 
+                         or records[student.registrationNumber].isEmpty()}">
+
+                <p>No academic records available.</p>
+
+            </div>
+
+            <div th:if="${records[student.registrationNumber] != null 
+                         and !records[student.registrationNumber].isEmpty()}">
+
+                <div th:each="record : ${records[student.registrationNumber]}"
+                     class="record">
+
+                    <strong th:text="${record.subject.subjectName}">
+                        Subject Name
+                    </strong>
+
+                    <p>
+                        Marks:
+                        <span th:text="${record.marks}">85</span>
+                    </p>
+
+                    <p>
+                        Grade:
+                        <span th:text="${T(src.model.grade).calculateGrade(record.marks)}">
+                            A
+                        </span>
+                    </p>
+
+                    <p>
+                        Grade Point:
+                        <span th:text="${T(src.model.grade).calculateGradePoint(record.marks)}">
+                            9.0
+                        </span>
+                    </p>
+
+                    <p>
+                        Attendance:
+                        <span th:text="${record.attendance + '%'}">
+                            90%
+                        </span>
+                    </p>
+
+                </div>
+
+                <div class="analytics">
+
+                    <h3>Overall Performance</h3>
+
+                    <p>
+                        Average Marks:
+                        <strong th:text="${#numbers.formatDecimal(
+                            analyzer.calculateAverage(records[student.registrationNumber]), 1, 2)}">
+                            0.00
+                        </strong>
+                    </p>
+
+                    <p>
+                        GPA:
+                        <strong th:text="${#numbers.formatDecimal(
+                            analyzer.calculateGPA(records[student.registrationNumber]), 1, 2)}">
+                            0.00
+                        </strong>
+                    </p>
+
+                    <p>
+                        Status:
+                        <strong th:text="${analyzer.getPerformanceStatus(
+                            records[student.registrationNumber])}">
+                            Good Performance
+                        </strong>
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <a href="/" class="button">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

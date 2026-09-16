@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Student Reports</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+        }
+
+        header {
+            background: #1f2937;
+            color: white;
+            padding: 30px 60px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        header p {
+            color: #d1d5db;
+        }
+
+        .container {
+            padding: 40px 60px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        .student {
+            padding: 18px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .report-button {
+            display: inline-block;
+            padding: 10px 18px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+
+        .back {
+            display: inline-block;
+            padding: 11px 18px;
+            background: #374151;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Student Reports</h1>
+    <p>Generate academic performance reports</p>
+</header>
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>Select Student</h2>
+
+        <div th:if="${students.isEmpty()}">
+            <p>No students available.</p>
+        </div>
+
+        <div th:each="student : ${students}" class="student">
+
+            <strong th:text="${student.name}">
+                Student Name
+            </strong>
+
+            <p>
+                Registration No.:
+                <span th:text="${student.registrationNumber}">
+                    REG001
+                </span>
+            </p>
+
+            <a th:href="@{/reports/view(registrationNumber=${student.registrationNumber})}"
+               class="report-button">
+                View Report
+            </a>
+
+        </div>
+
+    </div>
+
+    <a href="/" class="back">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

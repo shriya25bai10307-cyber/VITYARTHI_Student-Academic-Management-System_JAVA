@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Academic Management</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+        }
+
+        header {
+            background: #1f2937;
+            color: white;
+            padding: 30px 60px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        header p {
+            color: #d1d5db;
+        }
+
+        .container {
+            padding: 40px 60px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .student {
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .student h3 {
+            margin-top: 0;
+        }
+
+        .record {
+            background: #f9fafb;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+            border-left: 4px solid #2563eb;
+        }
+
+        .add-button {
+            display: inline-block;
+            padding: 12px 20px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-bottom: 25px;
+        }
+
+        .add-button:hover {
+            background: #1d4ed8;
+        }
+
+        .back {
+            display: inline-block;
+            padding: 11px 18px;
+            background: #374151;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .no-record {
+            color: #6b7280;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Academic Management</h1>
+    <p>Manage student academic information</p>
+</header>
+
+<div class="container">
+
+    <a href="/academic/add" class="add-button">
+        + Add Academic Record
+    </a>
+
+    <div class="card">
+
+        <h2>Academic Records</h2>
+
+        <p>
+            Total Students:
+            <strong th:text="${studentCount}">0</strong>
+        </p>
+
+        <div th:if="${studentCount == 0}">
+            <p>No students available.</p>
+        </div>
+
+        <div th:each="student : ${students}" class="student">
+
+            <h3 th:text="${student.name}">
+                Student Name
+            </h3>
+
+            <p>
+                Registration No.:
+                <strong th:text="${student.registrationNumber}">
+                    REG001
+                </strong>
+            </p>
+
+            <p>
+                Program:
+                <span th:text="${student.program}">
+                    AI/ML
+                </span>
+            </p>
+
+            <p>
+                Semester:
+                <span th:text="${student.semester}">
+                    1
+                </span>
+            </p>
+
+            <h4>Academic Records</h4>
+
+            <div th:if="${records[student.registrationNumber] == null 
+                         or records[student.registrationNumber].isEmpty()}">
+
+                <p class="no-record">
+                    No academic records available.
+                </p>
+
+            </div>
+
+            <div th:each="record : ${records[student.registrationNumber]}"
+                 class="record">
+
+                <strong th:text="${record.subject.subjectName}">
+                    Subject Name
+                </strong>
+
+                <p>
+                    Subject Code:
+                    <span th:text="${record.subject.subjectCode}">
+                        CSE101
+                    </span>
+                </p>
+
+                <p>
+                    Credits:
+                    <span th:text="${record.subject.credits}">
+                        4
+                    </span>
+                </p>
+
+                <p>
+                    Marks:
+                    <span th:text="${record.marks}">
+                        85
+                    </span>
+                </p>
+
+                <p>
+                    Attendance:
+                    <span th:text="${record.attendance + '%'}">
+                        90%
+                    </span>
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <a href="/" class="back">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Student Academic Management System</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+        }
+
+        header {
+            background: #1f2937;
+            color: white;
+            padding: 35px 60px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 34px;
+        }
+
+        header p {
+            color: #d1d5db;
+            font-size: 16px;
+        }
+
+        .container {
+            padding: 40px 60px;
+        }
+
+        .welcome {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+
+        .welcome h2 {
+            margin-top: 0;
+        }
+
+        .modules {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .module {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .module h3 {
+            margin-top: 0;
+        }
+
+        .module p {
+            color: #6b7280;
+            min-height: 45px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 11px 18px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        .count {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Student Academic Management System</h1>
+    <p>Manage students, academics, performance and reports</p>
+</header>
+
+<div class="container">
+
+    <div class="welcome">
+
+        <h2>Dashboard</h2>
+
+        <p>
+            Welcome to the Student Academic Management System.
+        </p>
+
+        <p>
+            Total Students:
+            <span class="count" th:text="${studentCount}">
+                0
+            </span>
+        </p>
+
+    </div>
+
+
+    <div class="modules">
+
+        <!-- Student Management -->
+
+        <div class="module">
+
+            <h3>Student Management</h3>
+
+            <p>
+                Add, search, update and manage student information.
+            </p>
+
+            <a href="/students" class="button">
+                Open Module
+            </a>
+
+        </div>
+
+
+        <!-- Academic Management -->
+
+        <div class="module">
+
+            <h3>Academic Management</h3>
+
+            <p>
+                Manage subjects, marks, credits and attendance records.
+            </p>
+
+            <a href="/academic" class="button">
+                Open Module
+            </a>
+
+        </div>
+
+
+        <!-- Performance Analytics -->
+
+        <div class="module">
+
+            <h3>Performance Analytics</h3>
+
+            <p>
+                Analyze marks, GPA, grades and overall performance.
+            </p>
+
+            <a href="/performance" class="button">
+                Open Module
+            </a>
+
+        </div>
+
+
+        <!-- Reports -->
+
+        <div class="module">
+
+            <h3>Student Reports</h3>
+
+            <p>
+                Generate and view complete academic reports.
+            </p>
+
+            <a href="/reports" class="button">
+                Open Module
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

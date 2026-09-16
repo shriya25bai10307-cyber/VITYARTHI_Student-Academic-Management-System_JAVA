@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Student Academic Report</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+        }
+
+        header {
+            background: #1f2937;
+            color: white;
+            padding: 30px 60px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        header p {
+            color: #d1d5db;
+        }
+
+        .container {
+            padding: 40px 60px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+        .info {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .info p {
+            margin: 8px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #f3f4f6;
+        }
+
+        .summary {
+            margin-top: 25px;
+            padding: 20px;
+            background: #eef2ff;
+            border-radius: 8px;
+        }
+
+        .summary p {
+            font-size: 17px;
+            margin: 12px 0;
+        }
+
+        .back {
+            display: inline-block;
+            padding: 11px 18px;
+            background: #374151;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .back:hover {
+            background: #1f2937;
+        }
+
+        .no-record {
+            color: #6b7280;
+            padding: 15px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Student Academic Report</h1>
+    <p>Complete academic performance summary</p>
+</header>
+
+<div class="container">
+
+    <div class="card">
+
+        <h2 th:text="${student.name}">
+            Student Name
+        </h2>
+
+        <div class="info">
+
+            <p>
+                Registration No.:
+                <strong th:text="${student.registrationNumber}">
+                    REG001
+                </strong>
+            </p>
+
+            <p>
+                Email:
+                <span th:text="${student.email}">
+                    student@email.com
+                </span>
+            </p>
+
+            <p>
+                Program:
+                <span th:text="${student.program}">
+                    AI/ML
+                </span>
+            </p>
+
+            <p>
+                Semester:
+                <span th:text="${student.semester}">
+                    1
+                </span>
+            </p>
+
+        </div>
+
+
+        <h3>Academic Performance</h3>
+
+
+        <div th:if="${records.isEmpty()}">
+
+            <p class="no-record">
+                No academic records available for this student.
+            </p>
+
+        </div>
+
+
+        <table th:if="${!records.isEmpty()}">
+
+            <thead>
+
+                <tr>
+                    <th>Subject Code</th>
+                    <th>Subject</th>
+                    <th>Credits</th>
+                    <th>Marks</th>
+                    <th>Grade</th>
+                    <th>Grade Point</th>
+                    <th>Attendance</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr th:each="record : ${records}">
+
+                    <td th:text="${record.subject.subjectCode}">
+                        CSE101
+                    </td>
+
+                    <td th:text="${record.subject.subjectName}">
+                        Programming
+                    </td>
+
+                    <td th:text="${record.subject.credits}">
+                        4
+                    </td>
+
+                    <td th:text="${record.marks}">
+                        85
+                    </td>
+
+                    <td th:text="${T(src.model.grade).calculateGrade(record.marks)}">
+                        A
+                    </td>
+
+                    <td th:text="${T(src.model.grade).calculateGradePoint(record.marks)}">
+                        9.0
+                    </td>
+
+                    <td th:text="${record.attendance + '%'}">
+                        90%
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+
+        <div th:if="${!records.isEmpty()}" class="summary">
+
+            <h3>Performance Summary</h3>
+
+            <p>
+                Average Marks:
+                <strong th:text="${#numbers.formatDecimal(
+                    analyzer.calculateAverage(records), 1, 2)}">
+                    0.00
+                </strong>
+            </p>
+
+            <p>
+                GPA:
+                <strong th:text="${#numbers.formatDecimal(
+                    analyzer.calculateGPA(records), 1, 2)}">
+                    0.00
+                </strong>
+            </p>
+
+            <p>
+                Performance Status:
+                <strong th:text="${analyzer.getPerformanceStatus(records)}">
+                    Good Performance
+                </strong>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <a href="/reports" class="back">
+        ← Back to Reports
+    </a>
+
+</div>
+
+</body>
+</html>
