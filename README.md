@@ -1,5 +1,10 @@
 # Smart Student Academic Management System
 
+## 🚀 Live Demo
+
+[Open Live Website](https://student-management-j9z7.onrender.com)
+
+
 ## Overview
 
 Smart Student Academic Management System is a web-based application developed using Java and Spring Boot.
